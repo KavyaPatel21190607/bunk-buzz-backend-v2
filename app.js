@@ -25,7 +25,7 @@ app.use(helmet());
 const allowedOrigins = [
   process.env.FRONTEND_URL || 'http://localhost:5173',
   'http://localhost:5173',
-  'https://bunk-buzz-apka-bunk-dost.vercel.app',
+  'https://aaj-bunk-hai-v2.vercel.app',
 ];
 
 const corsOptions = {
