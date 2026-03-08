@@ -2,7 +2,7 @@ import User from '../models/User.js';
 import PendingUser from '../models/PendingUser.js';
 import { generateTokens, verifyRefreshToken } from '../utils/tokenUtils.js';
 import { generateVerificationToken } from '../utils/tokenGenerator.js';
-import { sendVerificationEmail, sendWelcomeEmail } from '../utils/emailService.js';
+// import { sendVerificationEmail, sendWelcomeEmail } from '../utils/emailService.js';
 import { verifyGoogleToken } from '../config/googleOAuth.js';
 import { AppError } from '../middleware/errorHandler.js';
 
@@ -42,7 +42,8 @@ export const signup = async (req, res, next) => {
     });
 
     // Send verification email
-    const emailSent = await sendVerificationEmail(email, name, token);
+    // const emailSent = await sendVerificationEmail(email, name, token);
+    const emailSent = false; // Email service disabled
 
     res.status(201).json({
       success: true,
@@ -97,7 +98,7 @@ export const verifyEmail = async (req, res, next) => {
     await PendingUser.deleteOne({ _id: pendingUser._id });
 
     // Send welcome email
-    await sendWelcomeEmail(user.email, user.name);
+    // await sendWelcomeEmail(user.email, user.name); // Email service disabled
 
     // Generate JWT tokens
     const { accessToken, refreshToken } = generateTokens(user);
@@ -228,7 +229,7 @@ export const googleAuth = async (req, res, next) => {
       });
 
       // Send welcome email
-      await sendWelcomeEmail(user.email, user.name);
+      // await sendWelcomeEmail(user.email, user.name); // Email service disabled
     }
 
     // Generate JWT tokens
@@ -378,7 +379,7 @@ export const resendVerification = async (req, res, next) => {
     await pendingUser.save();
 
     // Resend verification email
-    await sendVerificationEmail(email, pendingUser.name, token);
+    // await sendVerificationEmail(email, pendingUser.name, token); // Email service disabled
 
     res.status(200).json({
       success: true,
